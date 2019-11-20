@@ -1,5 +1,5 @@
 import Paddle from './Paddle';
-import { KeysDownType } from '../components/App';
+import { KeysDownType } from '../../components/App';
 import Ball from './Ball';
 
 abstract class GamePlayer implements IGameEntity {
