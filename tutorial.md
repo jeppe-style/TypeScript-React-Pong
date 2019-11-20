@@ -8,5 +8,6 @@
 
 1. Explain the app files
 1. create `components` folder and move the app components into that (fix paths)
-2. 
+2. create the title - `SI Pong`
+3. remove logo file
 
