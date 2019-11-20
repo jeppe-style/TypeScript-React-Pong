@@ -14,3 +14,6 @@
 5. add entities
 
 ## Animate Entities
+
+1. Add ball animation
+2. Add controls

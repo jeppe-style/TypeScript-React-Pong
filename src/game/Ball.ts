@@ -4,8 +4,8 @@ const DEFAULT_Y_SPEED = 3;
 const DEFAULT_X_SPEED = 0;
 
 class Ball implements IGameEntity {
-  private x: number;
-  private y: number;
+  private _x: number;
+  private _y: number;
   private context: CanvasRenderingContext2D;
 
   private canvasWidth: number;
@@ -22,28 +22,32 @@ class Ball implements IGameEntity {
     canvasWidth: number,
     context: CanvasRenderingContext2D
   ) {
-    this.x = x;
-    this.y = y;
+    this._x = x;
+    this._y = y;
     this.canvasHeight = canvasHeight;
     this.canvasWidth = canvasWidth;
     this.context = context;
   }
 
+  get x() {
+    return this._x;
+  }
+
   public render = () => {
     this.context.beginPath();
-    this.context.arc(this.x, this.y, this.radius, 2 * Math.PI, 0, false);
+    this.context.arc(this._x, this._y, this.radius, 2 * Math.PI, 0, false);
     this.context.fillStyle = '#000000';
     this.context.fill();
   };
 
   public update = (playerPaddle: Paddle, computerPaddle: Paddle) => {
-    this.x += this.xSpeed;
-    this.y += this.ySpeed;
+    this._x += this.xSpeed;
+    this._y += this.ySpeed;
 
-    const topX = this.x - this.radius;
-    const topY = this.y - this.radius;
-    const bottomX = this.x + this.radius;
-    const bottomY = this.y + this.radius;
+    const topX = this._x - this.radius;
+    const topY = this._y - this.radius;
+    const bottomX = this._x + this.radius;
+    const bottomY = this._y + this.radius;
 
     const hasHitPaddle = (paddle: Paddle) => {
       return (
@@ -55,24 +59,24 @@ class Ball implements IGameEntity {
     };
 
     // hitting walls
-    if (this.x - this.radius < 0) {
+    if (this._x - this.radius < 0) {
       // hitting the left wall
-      this.x = this.radius;
+      this._x = this.radius;
       this.xSpeed = -this.xSpeed;
-    } else if (this.x + this.radius > this.canvasWidth) {
+    } else if (this._x + this.radius > this.canvasWidth) {
       // hitting the right wall
-      this.x = this.canvasWidth - this.radius;
+      this._x = this.canvasWidth - this.radius;
       this.xSpeed = -this.xSpeed;
     }
 
     // point was scored
-    if (this.y < 0 || this.y > this.canvasHeight) {
+    if (this._y < 0 || this._y > this.canvasHeight) {
       this.xSpeed = DEFAULT_X_SPEED;
       this.ySpeed = DEFAULT_Y_SPEED;
 
       // reset the ball
-      this.x = this.canvasWidth / 2;
-      this.y = this.canvasHeight / 2;
+      this._x = this.canvasWidth / 2;
+      this._y = this.canvasHeight / 2;
     }
 
     // hitting a paddle
@@ -82,7 +86,7 @@ class Ball implements IGameEntity {
         // hit the player's paddle
         this.ySpeed = -DEFAULT_Y_SPEED;
         this.xSpeed += playerPaddle.xSpeed / 2;
-        this.y += this.ySpeed;
+        this._y += this.ySpeed;
       }
     } else {
       if (hasHitPaddle(computerPaddle)) {
@@ -90,7 +94,7 @@ class Ball implements IGameEntity {
 
         this.ySpeed = DEFAULT_Y_SPEED;
         this.xSpeed += computerPaddle.ySpeed / 2;
-        this.y += this.ySpeed;
+        this._y += this.ySpeed;
       }
     }
   };
