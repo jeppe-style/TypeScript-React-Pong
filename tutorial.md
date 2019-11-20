@@ -10,4 +10,7 @@
 1. create `components` folder and move the app components into that (fix paths)
 2. create the title - `SI Pong`
 3. remove logo file
+4. add canvas
+5. add entities
 
+## Animate Entities

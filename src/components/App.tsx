@@ -19,9 +19,11 @@ const App: React.FC = () => {
       if (context) {
         const player = new Player(context);
         const computer = new Computer(context);
-        const ball = new Ball(200, 300, context);
+        const ball = new Ball(200, 300, HEIGHT, WIDTH, context);
 
-        const update = () => {};
+        const update = () => {
+          ball.update(player.paddle, computer.paddle);
+        };
 
         const render = () => {
           context.fillStyle = '#FF00FF';

@@ -1,13 +1,17 @@
 import Paddle from './Paddle';
 
 abstract class GamePlayer implements IGameEntity {
-  private paddle: Paddle;
+  private _paddle: Paddle;
 
   constructor(paddle: Paddle) {
-    this.paddle = paddle;
+    this._paddle = paddle;
   }
 
-  public render = () => this.paddle.render();
+  get paddle() {
+    return this._paddle;
+  }
+
+  public render = () => this._paddle.render();
 }
 
 export class Player extends GamePlayer {

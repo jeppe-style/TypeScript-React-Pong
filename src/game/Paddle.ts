@@ -1,9 +1,12 @@
 class Paddle implements IGameEntity {
-  private x: number;
-  private y: number;
-  private width: number;
-  private height: number;
-  private context: CanvasRenderingContext2D;
+  private _x: number;
+  private _y: number;
+  private _width: number;
+  private _height: number;
+  private _context: CanvasRenderingContext2D;
+
+  private _xSpeed = 0;
+  private _ySpeed = 0;
 
   constructor(
     x: number,
@@ -12,17 +15,41 @@ class Paddle implements IGameEntity {
     height: number,
     context: CanvasRenderingContext2D
   ) {
-    this.x = x;
-    this.y = y;
-    this.width = width;
-    this.height = height;
-    this.context = context;
+    this._x = x;
+    this._y = y;
+    this._width = width;
+    this._height = height;
+    this._context = context;
   }
 
   public render = () => {
-    this.context.fillStyle = '#0000FF';
-    this.context.fillRect(this.x, this.y, this.width, this.height);
+    this._context.fillStyle = '#0000FF';
+    this._context.fillRect(this._x, this._y, this._width, this._height);
   };
+
+  get x() {
+    return this._x;
+  }
+
+  get y() {
+    return this._y;
+  }
+
+  get width() {
+    return this._width;
+  }
+
+  get height() {
+    return this._height;
+  }
+
+  get xSpeed() {
+    return this._xSpeed;
+  }
+
+  get ySpeed() {
+    return this._ySpeed;
+  }
 }
 
 export default Paddle;
