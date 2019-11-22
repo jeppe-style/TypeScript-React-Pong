@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import PongGame from '../game/PongGame';
+import PongGame from './PongGame';
 
 export type KeysDownType = { [key: number]: boolean };
 

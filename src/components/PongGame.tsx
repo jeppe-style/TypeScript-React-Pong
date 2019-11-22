@@ -1,8 +1,8 @@
 import React, { useRef, useEffect } from 'react';
 
-import { KeysDownType } from '../components/App';
-import { Player, Computer } from './entity/Player';
-import Ball from './entity/Ball';
+import { KeysDownType } from './App';
+import { Player, Computer } from '../game/entity/Player';
+import Ball from '../game/entity/Ball';
 
 const WIDTH = 400;
 const HEIGHT = 600;
