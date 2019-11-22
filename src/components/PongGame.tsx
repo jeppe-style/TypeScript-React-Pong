@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 
 import { KeysDownType } from './App';
 import { Player, Computer } from '../game/entity/Player';
@@ -13,6 +13,8 @@ const PongGame: React.FC = () => {
   const animate = window.requestAnimationFrame;
 
   const keysDown: KeysDownType = {};
+
+  const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
     if (canvasRef.current) {
@@ -30,12 +32,17 @@ const PongGame: React.FC = () => {
 
         window.addEventListener('keyup', (event: KeyboardEvent) => {
           delete keysDown[event.keyCode];
+          if (event.keyCode === 32) {
+            setIsPlaying(true);
+          }
         });
 
         const update = () => {
-          ball.update(player.paddle, computer.paddle);
-          player.update(keysDown);
-          computer.update(ball);
+          if (isPlaying) {
+            ball.update(player.paddle, computer.paddle);
+            player.update(keysDown);
+            computer.update(ball);
+          }
         };
 
         const render = () => {
@@ -55,7 +62,7 @@ const PongGame: React.FC = () => {
         animate(step);
       }
     }
-  }, [canvasRef, animate, keysDown]);
+  }, [canvasRef, animate, keysDown, isPlaying]);
 
   return <canvas ref={canvasRef} width={WIDTH} height={HEIGHT} />;
 };
