@@ -1,6 +1,6 @@
 export const ADD_GOAL = '[GAME] add goal';
 
-const addGoal = (player: 'player' | 'computer') => ({
+export const addGoal = (player: 'player' | 'computer') => ({
     type: ADD_GOAL as typeof ADD_GOAL,
     player
 });

@@ -36,6 +36,8 @@
 ### Getting started
 
 1. `npx create-react-app si-typescript-game-tutorial --typescript`
+2. show `node_modules` folder - that's the magic
+3. show tsconfig.json
 
 ### Create Main Page
 
@@ -45,11 +47,19 @@
 3. remove logo file
 4. add canvas
 5. add entities
+6. add score
 
 ### Animate Entities
 
 1. Add ball animation
 2. Add controls
 
-### Add state
+### Add State
+
+1. Add redux folder with contents + store provider
+2. Add reading of counters
+3. Add adding score
+
+
+
 

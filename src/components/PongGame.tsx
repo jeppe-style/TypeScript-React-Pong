@@ -1,8 +1,11 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { KeysDownType } from './App';
 import { Player, Computer } from '../game/entity/Player';
 import Ball from '../game/entity/Ball';
+
+import { addGoal } from '../redux/reducers/game/actions';
 
 const WIDTH = 400;
 const HEIGHT = 600;
@@ -10,13 +13,21 @@ const HEIGHT = 600;
 const PongGame: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  const animate = window.requestAnimationFrame;
-
   const keysDown: KeysDownType = {};
 
   const [isPlaying, setIsPlaying] = useState(false);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
+    let requestId: number;
+
+    const goalWasScored: GoalWasScoredType = player => {
+      dispatch(addGoal(player));
+      setIsPlaying(false);
+      console.log(player);
+    };
+
     if (canvasRef.current) {
       const canvas = canvasRef.current;
       const context = canvas.getContext('2d');
@@ -24,7 +35,7 @@ const PongGame: React.FC = () => {
       if (context) {
         const player = new Player(WIDTH, context);
         const computer = new Computer(WIDTH, context);
-        const ball = new Ball(200, 300, HEIGHT, WIDTH, context);
+        const ball = new Ball(200, 300, HEIGHT, WIDTH, context, goalWasScored);
 
         window.addEventListener('keydown', (event: KeyboardEvent) => {
           keysDown[event.keyCode] = true;
@@ -56,13 +67,16 @@ const PongGame: React.FC = () => {
         const step = () => {
           update();
           render();
-          animate(step);
+          requestId = window.requestAnimationFrame(step);
         };
 
-        animate(step);
+        step();
       }
     }
-  }, [canvasRef, animate, keysDown, isPlaying]);
+    return () => {
+      window.cancelAnimationFrame(requestId);
+    };
+  }, [canvasRef, keysDown, isPlaying, dispatch]);
 
   return <canvas ref={canvasRef} width={WIDTH} height={HEIGHT} />;
 };

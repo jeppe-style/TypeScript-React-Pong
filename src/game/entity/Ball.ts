@@ -15,18 +15,22 @@ class Ball implements IGameEntity {
   private ySpeed = DEFAULT_Y_SPEED;
   private radius = 5;
 
+  private goalScoredCallback: GoalWasScoredType;
+
   constructor(
     x: number,
     y: number,
     canvasHeight: number,
     canvasWidth: number,
-    context: CanvasRenderingContext2D
+    context: CanvasRenderingContext2D,
+    goalScoredListener: GoalWasScoredType
   ) {
     this._x = x;
     this._y = y;
     this.canvasHeight = canvasHeight;
     this.canvasWidth = canvasWidth;
     this.context = context;
+    this.goalScoredCallback = goalScoredListener;
   }
 
   get x() {
@@ -71,6 +75,8 @@ class Ball implements IGameEntity {
 
     // point was scored
     if (this._y < 0 || this._y > this.canvasHeight) {
+      this.goalScoredCallback(this._y < 0 ? 'player' : 'computer');
+
       this.xSpeed = DEFAULT_X_SPEED;
       this.ySpeed = DEFAULT_Y_SPEED;
 
