@@ -25,7 +25,6 @@ const PongGame: React.FC = () => {
     const goalWasScored: GoalWasScoredType = player => {
       dispatch(addGoal(player));
       setIsPlaying(false);
-      console.log(player);
     };
 
     if (canvasRef.current) {
@@ -43,7 +42,8 @@ const PongGame: React.FC = () => {
 
         window.addEventListener('keyup', (event: KeyboardEvent) => {
           delete keysDown[event.keyCode];
-          if (event.keyCode === 32) {
+          // if any key is pressed the game starts
+          if (!isPlaying) {
             setIsPlaying(true);
           }
         });
